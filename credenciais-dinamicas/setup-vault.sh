@@ -5,6 +5,15 @@ set -euf -o pipefail
 # CONFIGURANDO MYSQL SECRETs ENGINE #
 #####################################
 
+export VAULT_ADDR=$(minikube service vault-server --url)
+
+# valor padrão em dev mode no Helm Chart
+export VAULT_TOKEN=root 
+
+#####################################
+# CONFIGURANDO MYSQL SECRETs ENGINE #
+#####################################
+
 vault secrets enable database 	
 
 vault write database/config/meu-banco \
@@ -121,4 +130,3 @@ vault write auth/kubernetes/role/app \
         bound_service_account_namespaces=default \
         policies=app \
         ttl=24h
-
