@@ -1,6 +1,6 @@
-# Credenciais Dinamicas com Vault
+# Segurança de Banco de Dados com Vault
 
-Talk sobre *Dyanamic Secrets* com Hashicorp Vault.
+Talk sobre Credenciais Dinâmicas (Dyanamic Secrets) com Hashicorp Vault.
 
 💻 [Slides](https://docs.google.com/presentation/d/1otRH8TSHg3kZV4Nm8YKcBaRCtonYUapg45XQIDqgNb8/edit?usp=sharing)
 
