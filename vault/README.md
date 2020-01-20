@@ -41,7 +41,7 @@ kubectl expose svc vault --type=LoadBalancer --port=8200 --target-port=8200 --na
 Verifique que o servidor subiu com o comando abaixo:
 
 ```console
-$ minikube service vault-server
+minikube service vault-server
 ```
 
 ## Configuracao MySQL
