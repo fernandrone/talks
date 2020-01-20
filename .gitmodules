@@ -1,3 +1,6 @@
 [submodule "credenciais-dinamicas/vault-helm"]
 	path = credenciais-dinamicas/vault-helm
 	url = https://github.com/hashicorp/vault-helm.git
+[submodule "vault/vault-helm"]
+	path = vault/vault-helm
+	url = https://github.com/hashicorp/vault-helm
