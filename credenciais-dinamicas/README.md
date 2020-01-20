@@ -122,5 +122,5 @@ Comandos de leitura devem funcionar, mas comandos de escrita, não:
 
 ```
 SELECT * FROM table;  # OK
-UPDATE table SET count=0 WHERE id='clicks';  # FAIL
+CREATE TABLE 'minhatabela';  # FAIL
 ```
