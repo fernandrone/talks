@@ -9,7 +9,7 @@ Talk sobre *Dyanamic Secrets* com Hashicorp Vault.
 * [Kubectl 1.15+](https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl-on-linux) (testado com 1.6.2)
 * Um [Hypervisor](https://kubernetes.io/docs/tasks/tools/install-minikube/#install-a-hypervisor) (testado com [KVM2](https://www.linux-kvm.org/page/Main_Page))
 * [Helm](https://helm.sh/blog/helm-3-released/) (testado com 3.0.2)
-* [Vault](https://helm.sh/blog/helm-3-released/) (testado com 1.3.1)
+* [Vault](https://www.vaultproject.io/downloads/) (testado com 1.3.1)
 * [jq](https://stedolan.github.io/jq/download/)
 
 ## Configuracao Vault
