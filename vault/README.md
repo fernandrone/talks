@@ -123,6 +123,10 @@ $ mysql =h 127.0.0.1 -u <username> -p<pwd> -D <meu-banco>
 Comandos de leitura devem funcionar, mas comandos de escrita, não:
 
 ```
-SELECT * FROM table;  # OK
-CREATE TABLE 'minhatabela';  # FAIL
+CREATE TABLE tbl(  
+   id INT NOT NULL AUTO_INCREMENT,  
+   nome VARCHAR(100) NOT NULL,  
+   sobrenome VARCHAR(100) NOT NULL,  
+   PRIMARY KEY ( id )  
+); # FAIL
 ```
