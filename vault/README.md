@@ -6,17 +6,17 @@ Talk sobre Credenciais Dinâmicas (Dynamic Secrets) com Hashicorp Vault.
 
 ## Requisitos
 
-* [Docker](https://docs.docker.com/install/linux/docker-ce/debian/)
-* [Minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/#install-minikube-via-direct-download) (testado com 1.17.1)
-* [Kubectl 1.15+](https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl-on-linux) (testado com 1.6.2)
-* Um [Hypervisor](https://kubernetes.io/docs/tasks/tools/install-minikube/#install-a-hypervisor) (testado com [KVM2](https://www.linux-kvm.org/page/Main_Page))
-* [Helm](https://helm.sh/blog/helm-3-released/) (testado com 3.0.2)
-* [Vault](https://www.vaultproject.io/downloads/) (testado com 1.3.1)
-* [jq](https://stedolan.github.io/jq/download/)
+- [Docker](https://docs.docker.com/install/linux/docker-ce/debian/)
+- [Minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/#install-minikube-via-direct-download) (testado com 1.17.1)
+  - Um [Hypervisor](https://kubernetes.io/docs/tasks/tools/install-minikube/#install-a-hypervisor) (testado com [KVM2](https://www.linux-kvm.org/page/Main_Page))
+- [Kubectl 1.17+](https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl-on-linux) (testado com 1.6.2)
+- [Helm](https://helm.sh/blog/helm-3-released/) (testado com 3.0.2)
+- [Vault](https://www.vaultproject.io/downloads/) (testado com 1.3.1)
+- [jq](https://stedolan.github.io/jq/download/)
 
-## Configuracao Vault
+## Configuração Vault
 
-Primeiro, clonar esse repositorio:
+Primeiro, clonar esse repositório:
 
 ```console
 git clone https://github.com/fbcbarbosa/talks/ --recurse-submodules
@@ -28,7 +28,7 @@ Inicializar o Minikube:
 minikube start --vm-driver kvm2 --kubernetes-version v1.17.1
 ```
 
-Entao, instalar o Vault no Kubertes:
+Então, instalar o Vault no Kubernetes:
 
 ```console
 helm install vault ./vault-helm --set server.dev.enabled=true
@@ -123,10 +123,10 @@ $ mysql =h 127.0.0.1 -u <username> -p<pwd> -D <meu-banco>
 Comandos de leitura devem funcionar, mas comandos de escrita, não:
 
 ```
-CREATE TABLE tbl(  
-   id INT NOT NULL AUTO_INCREMENT,  
-   nome VARCHAR(100) NOT NULL,  
-   sobrenome VARCHAR(100) NOT NULL,  
-   PRIMARY KEY ( id )  
+CREATE TABLE tbl(
+   id INT NOT NULL AUTO_INCREMENT,
+   nome VARCHAR(100) NOT NULL,
+   sobrenome VARCHAR(100) NOT NULL,
+   PRIMARY KEY ( id )
 ); # FAIL
 ```

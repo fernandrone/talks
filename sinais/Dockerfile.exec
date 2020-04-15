@@ -1,0 +1,5 @@
+FROM debian:stable
+
+ADD trap.sh trap.sh
+
+ENTRYPOINT [ "./trap.sh" ]

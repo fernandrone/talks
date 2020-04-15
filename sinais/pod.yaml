@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: trap
+  labels:
+    app: trap
+spec:
+  terminationGracePeriodSeconds: 10 # default is 30
+  containers:
+  - name: trap
+    image: trap:exec
+    imagePullPolicy: IfNotPresent
+    command: ['./trap.sh']
+    lifecycle:
+      preStop:
+        exec:
+          command: ["echo", "Executando preStop Hook"]
