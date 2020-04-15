@@ -20,4 +20,6 @@ handle() {
 }
 
 echo "Iniciando o processo (PID $$)..."
-sleep infinity # Esperar para sempre, para que o programa nunca termine
+
+sleep infinity & # Espera para sempre e cria um novo processo
+wait             # Espera o novo processo
