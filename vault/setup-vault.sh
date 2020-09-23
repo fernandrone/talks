@@ -1,8 +1,6 @@
 #!/bin/bash
 set -euf -o pipefail
 
-export VAULT_ADDR=$(minikube service vault-server --url)
-
 # valor padrão em dev mode no Helm Chart
 export VAULT_TOKEN=root 
 
@@ -113,7 +111,7 @@ metadata:
   namespace: default
 
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: role-app-binding
@@ -135,7 +133,7 @@ metadata:
   namespace: default
 
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: role-dev-binding
