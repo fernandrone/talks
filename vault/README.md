@@ -12,7 +12,7 @@ Talk sobre Credenciais Dinâmicas (Dynamic Secrets) com Hashicorp Vault.
 - [Kubectl 1.17+](https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl-on-linux) (testado com 1.19.2)
 - [Helm 3.0+](https://helm.sh/docs/intro/install/) (testado com 3.3.4)
 - [Vault 1.0+](https://www.vaultproject.io/downloads/) (testado com 1.5.3)
-- [jq](https://stedolan.github.io/jq/download/ (testado com 1.6.1)
+- [jq](https://stedolan.github.io/jq/download/) (testado com 1.6.1)
 - [mysql-client](https://dev.mysql.com/doc/mysql-installation-excerpt/8.0/en/) (testado com 8.0.21)
 
 ## Configuração Vault
@@ -23,11 +23,7 @@ Primeiro, clonar esse repositório:
 git clone https://github.com/fbcbarbosa/talks/ --recurse-submodules
 ```
 
-> 🛈 se você já fez o clone, você pode inicializar os submódulos com o comando abaixo:
-
-    ```console
-    git submodule update --init --recursive
-    ``` 
+> 🛈 se você já fez o clone, você pode inicializar os submódulos com o comando `git submodule update --init --recursive`
 
 Inicializar o Minikube:
 
