@@ -138,14 +138,14 @@ username           v-kubernetes-read-AJ8NJQDRwuxroz
 Para se conectar no banco de dados, vamos fazer um _port-forward_ com o _pod_ do MySQL:
 
 ```
-$ kubectl port-forward svc/meu-banco-mysql 3306
+$ kubectl port-forward svc/meu-banco-mysql 3306 &
 $ mysql -h 127.0.0.1 -D meu-banco -u <user> -p<pwd> 
 ```
 
 Comandos de escrita devem falhar:
 
 ```mysql
-mysql> CREATE TABLE tbl(
+$ mysql> CREATE TABLE tbl(
    id INT NOT NULL AUTO_INCREMENT,
    nome VARCHAR(100) NOT NULL,
    sobrenome VARCHAR(100) NOT NULL,
@@ -157,11 +157,36 @@ ERROR 1142 (42000): CREATE command denied to user ...
 Porém comandos de leitura devem funcionar. Troque para a database `mysql` e leia o conteúdo da tabela user:
 
 ```mysql
-mysql> USE mysql;
-mysql> SELECT user FROM user;
+$ mysql> USE mysql;
+$ mysql> SELECT user FROM user;
+```
+
+Podemos repetir os passos, agora com o token da aplicação, que tem permissão de escrita.
+
+```console
+$ VAULT_SA_NAME=$(kubectl get sa app -o jsonpath="{.secrets[*]['name']}") && \
+  KUBE_TOKEN=$(kubectl get secret $VAULT_SA_NAME -o jsonpath="{.data.token}" | base64 --decode; echo) && \
+  curl -sd '{"jwt": "'"$KUBE_TOKEN"'", "role": "app"}' $VAULT_ADDR/v1/auth/kubernetes/login | jq
+...
+$ vault login <client-token>
+...
+```
+
+Agora o comandos de escrita no banco devem funcionar:
+
+```
+$ mysql -h 127.0.0.1 -D meu-banco -u <user> -p<pwd> 
+$ mysql> CREATE TABLE tbl(
+   id INT NOT NULL AUTO_INCREMENT,
+   nome VARCHAR(100) NOT NULL,
+   sobrenome VARCHAR(100) NOT NULL,
+   PRIMARY KEY ( id )
+);
 ```
 
 Verificamos então que o sitema de **autorização** e **autenticaçao** do Vault funciona corretamente!
+
+***
 
 Vamos tentar revogar a credencial. Note que é necessário se conectar como usuário _root_, do contrário não temos permissão de revogar _leases_.
 
@@ -176,6 +201,8 @@ $ mysql -h 127.0.0.1 -D meu-banco -u <user> -p<pass>
 mysql: [Warning] Using a password on the command line interface can be insecure.
 ERROR 1045 (28000): Access denied for user ...
 ```
+
+***
 
 E é isso! Você pode agora pausar o cluster com o comando abaixo:
 
