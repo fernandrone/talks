@@ -2,17 +2,17 @@
 
 Talk sobre Credenciais Dinâmicas (Dynamic Secrets) com Hashicorp Vault.
 
-💻 [Slides](https://docs.google.com/presentation/d/1otRH8TSHg3kZV4Nm8YKcBaRCtonYUapg45XQIDqgNb8/edit?usp=sharing)
+💻 [Slides](https://speakerdeck.com/fernandrone/seguranca-de-banco-de-dados-com-vault)
 
 ## Requisitos
 
-- [Docker](https://docs.docker.com/install/linux/docker-ce/debian/)
+- [Docker](https://docs.docker.com/install/linux/docker-ce/debian/) (testado com 19.03.12)
 - [Minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/#install-minikube-via-direct-download) (testado com 1.17.1)
   - Um [Hypervisor](https://kubernetes.io/docs/tasks/tools/install-minikube/#install-a-hypervisor) (testado com [KVM2](https://www.linux-kvm.org/page/Main_Page))
 - [Kubectl 1.17+](https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl-on-linux) (testado com 1.6.2)
-- [Helm](https://helm.sh/blog/helm-3-released/) (testado com 3.0.2)
-- [Vault](https://www.vaultproject.io/downloads/) (testado com 1.3.1)
-- [jq](https://stedolan.github.io/jq/download/)
+- [Helm](https://helm.sh/docs/intro/install/) (testado com 3.3.4)
+- [Vault](https://www.vaultproject.io/downloads/) (testado com 1.5.3)
+- [jq](https://stedolan.github.io/jq/download/ (testado com 1.6.1)
 
 ## Configuração Vault
 
@@ -21,6 +21,12 @@ Primeiro, clonar esse repositório:
 ```console
 git clone https://github.com/fbcbarbosa/talks/ --recurse-submodules
 ```
+
+> 🛈 se você já fez o clone, você pode inicializar os submódulos com o comando abaixo:
+
+    ```console
+    git submodule update --init --recursive
+    ``` 
 
 Inicializar o Minikube:
 
