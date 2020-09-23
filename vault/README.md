@@ -176,3 +176,15 @@ $ mysql -h 127.0.0.1 -D meu-banco -u <user> -p<pass>
 mysql: [Warning] Using a password on the command line interface can be insecure.
 ERROR 1045 (28000): Access denied for user ...
 ```
+
+E é isso! Você pode agora pausar o cluster com o comando abaixo:
+
+```console
+$ minikube stop
+```
+
+Ou, caso deseje remover a configuração atual do cluster (incluindo os _pods_ do Vault, MySQL, Helm, etc.): 
+
+```console
+$ minikube delete
+```
