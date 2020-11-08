@@ -184,3 +184,31 @@ $ kubectl delete pod pod-shell
 Note que o comando ficará "preso" por 10 segundos, o valor do `terminationGracePeriodSeconds` que configuramos para o _pod_, e finalizará sem imprimir a mensagem de  encerramento gracioso.
 
 Você pode também modificar as configurações `preStop` e `terminationGracePeriodSeconds` para averiguar o funcionamento delas.
+
+## Extras
+
+As mensagens abaixo mostram os outputs dos logs do Docker Daemon quando o comando `docker stop` é invocado na imagem `docker stop`. É possível visualizar a tentativa de parar o container graciosamente utilizando-se a API `/stop` com o sinal 15 (SIGTERM). Após 10 segundos, a API `/delete` é invocada, que envia o sinal 9 (SIGKILL).
+
+```console
+$ docker run -it trap:shell # id e9c6e729c0dc
+$ docker stop e9c6e729c0dc
+...
+$ journalctl -u docker.service -f
+nov 08 19:48:28 A40 dockerd[1788]: time="2020-11-08T19:48:28.153599523-03:00" level=debug msg="Calling POST /v1.40/containers/e9c6e729c0dc/stop"
+nov 08 19:48:28 A40 dockerd[1788]: time="2020-11-08T19:48:28.153690763-03:00" level=debug msg="Sending kill signal 15 to container e9c6e729c0dc819e2fd098677c608573ba9c9bf4c113f7f22c2c1e832b39d7f1"
+nov 08 19:48:38 A40 dockerd[1788]: time="2020-11-08T19:48:38.187468949-03:00" level=info msg="Container e9c6e729c0dc819e2fd098677c608573ba9c9bf4c113f7f22c2c1e832b39d7f1 failed to exit within 10 seconds of signal 15 - using the force"
+nov 08 19:48:38 A40 dockerd[1788]: time="2020-11-08T19:48:38.187534771-03:00" level=debug msg="Sending kill signal 9 to container e9c6e729c0dc819e2fd098677c608573ba9c9bf4c113f7f22c2c1e832b39d7f1"
+nov 08 19:48:38 A40 dockerd[1788]: time="2020-11-08T19:48:38.281850454-03:00" level=debug msg=event module=libcontainerd namespace=moby topic=/tasks/exit
+nov 08 19:48:38 A40 dockerd[1788]: time="2020-11-08T19:48:38.310744602-03:00" level=debug msg=event module=libcontainerd namespace=moby topic=/tasks/delete
+nov 08 19:48:38 A40 dockerd[1788]: time="2020-11-08T19:48:38.310815213-03:00" level=info msg="ignoring event" module=libcontainerd namespace=moby topic=/tasks/delete type="*events.TaskDelete"
+nov 08 19:48:38 A40 dockerd[1788]: time="2020-11-08T19:48:38.310763858-03:00" level=debug msg="attach: stdout: end"
+nov 08 19:48:38 A40 dockerd[1788]: time="2020-11-08T19:48:38.310767074-03:00" level=debug msg="attach: stderr: end"
+nov 08 19:48:38 A40 dockerd[1788]: time="2020-11-08T19:48:38.310773776-03:00" level=debug msg="attach: stdin: end"
+nov 08 19:48:38 A40 dockerd[1788]: time="2020-11-08T19:48:38.310969770-03:00" level=debug msg="attach done"
+nov 08 19:48:38 A40 dockerd[1788]: time="2020-11-08T19:48:38.311130177-03:00" level=debug msg="Closing buffered stdin pipe"
+nov 08 19:48:38 A40 dockerd[1788]: time="2020-11-08T19:48:38.311363550-03:00" level=debug msg="Revoking external connectivity on endpoint priceless_villani (9a60a4b15cec575c559c33c8b004e60632bb41a64c0fe1476cef855393749272)"
+nov 08 19:48:38 A40 dockerd[1788]: time="2020-11-08T19:48:38.313481519-03:00" level=debug msg="DeleteConntrackEntries purged ipv4:0, ipv6:0"
+nov 08 19:48:38 A40 dockerd[1788]: time="2020-11-08T19:48:38.465232694-03:00" level=debug msg="Releasing addresses for endpoint priceless_villani's interface on network bridge"
+nov 08 19:48:38 A40 dockerd[1788]: time="2020-11-08T19:48:38.465297504-03:00" level=debug msg="ReleaseAddress(LocalDefault/172.17.0.0/16, 172.17.0.2)"
+nov 08 19:48:38 A40 dockerd[1788]: time="2020-11-08T19:48:38.465355402-03:00" level=debug msg="Released address PoolID:LocalDefault/172.17.0.0/16, Address:172.17.0.2 Sequence:App: ipam/default/data, ID: LocalDefault/172.17.0.0/16, DBIndex: 0x0, Bits: 65536, Unselected: 65532, Sequence: (0xe0000000, 1)->(0x0, 2046)->(0x1, 1)->end Curr:3"
+```
