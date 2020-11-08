@@ -1,16 +1,15 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: trap
+  name: trap-exec
   labels:
-    app: trap
+    app: exec
 spec:
   terminationGracePeriodSeconds: 10 # default is 30
   containers:
   - name: trap
     image: trap:exec
     imagePullPolicy: IfNotPresent
-    command: ['./trap.sh']
     lifecycle:
       preStop:
         exec:

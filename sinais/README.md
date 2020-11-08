@@ -140,16 +140,47 @@ Configure o Minikube para usar o docker daemon local:
 eval $(minikube docker-env)
 ```
 
-Crie um pod a partir do arquivo `pod.yaml`:
+Crie um pod a partir do arquivo `pod-exec.yml`. Em um terminal distinto, verifique seus logs:
 
 ```console
-$ kubectl apply -f pod.yaml
+$ kubectl apply -f pod-exec.yml
+$ kubectl logs -f trap-exec
+Iniciando o processo (PID 1)...
 ```
 
-O _pod_ est[a usando a imagem _trap:exec_, que captura os sinais do sistema corretamente. Utilize `kubectl delete` e verifique que o sinal TERM é capturado.
+O _pod_ está usando a imagem _trap:exec_, que inicializa como PID 1, permitindo a captura dos sinais do sistema corretamente. 
+
+> 🛈 Nossos manifestos não definem o campo _command_, comumente utilizado para sobrescrever o _entrypoint_ da imagem Docker de cada container presente no _Pod_. Isso faz com que o Pod inicie utilizando o _entrypoint_ definido na imagem do container.
+
+Utilize `kubectl delete` e verifique que o comando é terminado imediatamente, significando que o sinal TERM é capturado.
 
 ```console
-$ kubectl delete pod
+$ kubectl delete pod pod-exec
 ```
 
-Altere a imagem para _trap:shell_. Modifique as configurações _preStop_ e _terminationGracePeriodSeconds_ para averiguar o funcionamento delas.
+Na janela dos logs, você deve visualizar a seguinte mensagem:
+
+```console
+Iniciando o processo (PID 1)...
+Trapped: TERM
+Encerrando o processo graciosamente...
+Processo encerrado
+```
+
+Crie agora um novo pod a partir do arquivo `pod-shell.yml`.
+
+```console
+$ kubectl apply -f pod-shell.yml
+$ kubectl logs -f trap-shell
+Iniciando o processo (PID 6)...
+```
+
+Este está utilizando a imagem _trap:shell_ e, quando removido, não fará a captura do sinal.
+
+```console
+$ kubectl delete pod pod-shell
+```
+
+Note que o comando ficará "preso" por 10 segundos, o valor do `terminationGracePeriodSeconds` que configuramos para o _pod_, e finalizará sem imprimir a mensagem de  encerramento gracioso.
+
+Você pode também modificar as configurações `preStop` e `terminationGracePeriodSeconds` para averiguar o funcionamento delas.
